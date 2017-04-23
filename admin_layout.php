@@ -1,3 +1,10 @@
+<?php
+include("connection.php");
+session_start();
+if(isset($_SESSION["email"]))
+{
+ ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,15 +28,32 @@
   <div class="container-fluid">
 <div class="navbar navbar-default navbar-fixed-left">
   <ul class="nav navbar-nav"><br />
+  
+  <!-- check role -->
+  <?php 
+  
+    $email = $_SESSION["email"];
+	$fetch_user = mysqli_query($conn,"SELECT * FROM `authentication` WHERE email = '$email' ");
+	
+    if($fetch_user){
+		$fetch_assoc = mysqli_fetch_assoc($fetch_user);
+		$role = $fetch_assoc["role"];
+	}
+	
+	if($role > 0){
+	
+	?>
+  
    <h4>&nbsp Application</h4>
-   <li><a href="#">New Admission</a></li>
-   <li><a href="#">Edit Application</a></li>
-   <li><a href="#">Application Fees</a></li><br />
+   <li><a href="newentry.php">New Admission</a></li>
+   <li><a href="">Edit Application</a></li>
+   <li><a href="application_fee.php">Application Fees</a></li><br />
    
    <h4>&nbsp Form Sales</h4>
-   <li><a href="#">Form Sales Entry</a></li>
-   <li><a href="#">Total Sales</a></li><br />
+   <li><a href="form_sales_entry.php">Form Sales Entry</a></li>
+   <li><a href="totalsales.php">Total Sales</a></li><br />
    
+   <?php if ($role > 1){ ?>
    <h4>&nbsp Rank List</h4>
    <li><a href="#">Create Rank list</a></li>
    <li><a href="#"> View Existing</a></li>
@@ -38,7 +62,10 @@
    <h4>&nbsp Waiting List</h4>
    <li><a href="#">Waiting list 1</a></li>
    <li><a href="#">Waiting list 2</a></li>
-   <li><a href="#"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+   	<?php } }?>
+   <li><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+   <li><a href="change_pass.php"> Change Password</a></li>
+
   </ul>
 </div>
 <div class="container">
@@ -51,7 +78,84 @@
 <img class="img-responsive" src="images/title.gif"><br>&nbsp;&nbsp; </div>
 
 </div>
- <?php echo content(); ?>
+<br />
+ <?php 
+ $actual_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+ 
+ switch($actual_link){
+case $full_url.'newentry.php':
+if($role > 0){
+	 echo content();
+}
+else
+{
+	echo "You dont have rights to access this page";
+}
+break;
+
+case $full_url.'application_fee.php':
+
+if($role > 0){
+	 echo content();
+}
+else
+{
+	echo "You dont have rights to access this page";
+}
+break;
+	 
+case $full_url.'form_sales_entry.php':
+
+if($role > 0){
+	 echo content();
+}
+else
+{
+	echo "You dont have rights to access this page";
+}
+break;
+
+case $full_url.'totalsales.php':
+
+if($role > 0){
+	 echo content();
+}
+else
+{
+	echo "You dont have rights to access this page";
+}
+break;	 
+
+ case $full_url :
+
+if($role > 0){
+	 echo content();
+}
+else
+{
+	echo "Students login is temporarily unavailable";
+}
+break;
+ 
+  case $full_url.'index.php' :
+  
+  if($role > 0){
+	 echo content();
+}
+else
+{
+	echo "Students login is temporarily unavailable";
+}
+break;
+
+case $full_url.'change_pass.php':
+
+echo content();
+
+break;
+ }
+ 
+ ?>
  </div>
 </div>
   
@@ -61,3 +165,9 @@
 	
   </body>
 </html>
+<?php } 
+else 
+{
+	header('Location:login.php');
+}
+?>

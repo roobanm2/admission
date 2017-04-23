@@ -1,36 +1,86 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
 
-<!-- header -->
+include("admin_layout.php");
 
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Thiagarajar College</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<link rel="stylesheet" href="css/admission.css" >
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<script src="js/admission.js"></script>
-  </head>
-  
-  <body>
-  
-<div class="container-fluid header">
-<div class="header-logo display-inline">
-<embed src="images/logo.swf" quality="high" wmode="transparent" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" width="100" height="100">
-</div>
-<div class=" header-name display-inline">
-<img class="img-responsive" src="images/title.gif"><br>&nbsp;&nbsp; </div>
-
-</div>
-
-  <!-- content -->
-  
-  <?php echo content(); ?>
-
-	<!-- footer -->
+function content(){
 	
-  </body>
-</html>
+if(isset($_SESSION["email"]))
+{
+	?>
+	<div class="container-fluid">
+	
+  <div class="panel panel-danger panel-application">
+  <div class="panel-heading"><h3> Application </h3> </div>
+  <div class="panel-body">
+  <div class="row">
+  <div class="col-md-3">
+  <a href="newentry.php"><h4> 1 - New Admission</h4></a>
+  </div>
+  <div class="col-md-3">
+  <h4> 2 - Edit Application</h4>
+  </div>
+ 
+  <div class="col-md-3">
+ <a href="application_fee.php">  <h4> 3 - Application Fees Details </h4></a>
+  </div>
+  </div>
+  </div>
+</div>
+
+<div class="panel panel-info panel-rank-list">
+  <div class="panel-heading"><h3> Form Sales </h3> </div>
+  <div class="panel-body">
+  <div class="row">
+  <div class="col-md-3">
+  <a href="form_sales_entry.php"><h4> 4 - Form Sales Entry </h4></a>
+  </div>
+ <div class="col-md-3">
+  <a href="totalsales.php"><h4> 5 - Total Sales </h4></a>
+  </div>
+  </div>
+  </div>
+  </div>
+  
+  
+  <div class="panel panel-danger panel-rank-list">
+  <div class="panel-heading"><h3> Rank list </h3> </div>
+  <div class="panel-body">
+  <div class="row">
+  <div class="col-md-3">
+  <h4> 6 - Create Rank list</h4>
+  </div>
+  <div class="col-md-3">
+  <h4> 7 - View Existing</h4>
+  </div>
+  <div class="col-md-3">
+  <h4> 8 - Special Quota</h4>
+  </div>
+  </div>
+  </div>
+</div>
+
+  <div class="panel panel-info panel-waiting-list">
+  <div class="panel-heading"><h3> Waiting list </h3> </div>
+  <div class="panel-body">
+  <div class="row">
+  <div class="col-md-3">
+  <h4> 9 - Waiting list 1</h4>
+  </div>
+  <div class="col-md-3">
+  <h4> 0 - Waiting list 2</h4>
+  </div>
+  </div>
+  </div>
+</div>
+<div class="text-right">
+<a href="logout.php" class="btn btn-danger">Logout</a>
+</div><br /><br />
+	</div>
+<?php } 
+
+else
+{
+	header("Location:login.php");
+}}
+
+?>
